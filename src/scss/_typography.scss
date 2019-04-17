@@ -1,0 +1,11 @@
+body,
+button,
+input,
+select,
+textarea {
+	color: $brand-secondary;
+	font-family: $brand-font;
+	@include ms-respond(font-size, 2);
+	line-height:$ms-ratio;
+}
+

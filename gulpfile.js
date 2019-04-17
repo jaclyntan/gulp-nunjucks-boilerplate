@@ -35,7 +35,7 @@ const isProd = process.env.NODE_ENV === 'production';
 // Must have values, don't use leading or trailing slashes.
 const dirs = {
   entry: 'src',
-  output: 'build',
+  output: 'public_html',
 };
 
 // Path configuration.
@@ -56,8 +56,13 @@ const paths = {
     dest: `${dirs.output}/static/media`,
   },
   styles: {
+    watch: `${dirs.entry}/scss/**/*.+(css|scss)`,
     src: `${dirs.entry}/styles/**/*.+(css|scss)`,
     dest: `${dirs.output}/static/styles`,
+  },
+  fonts: {
+    src: `${dirs.entry}/fonts/**/*.+(woff|woff2)`,
+    dest: `${dirs.output}/static/fonts`,
   },
   scripts: {
     src: [
@@ -97,7 +102,9 @@ const pluginConfig = {
     imagemin.optipng({ optimizationLevel: 7 }),
     imagemin.svgo({
       plugins: [{ removeUselessDefs: false }, { cleanupIDs: false }],
-    }),
+    }), {
+      verbose: true
+    }
   ],
   nunjucksRender: {
     path: paths.views.root,
@@ -109,6 +116,7 @@ const pluginConfig = {
         scripts: '/static/scripts',
         styles: '/static/styles',
         media: '/static/media',
+        fonts: '/static/fonts'
       },
     },
     envOptions: {
@@ -242,6 +250,21 @@ gulp.task('media', () =>
 );
 
 //------------------------------------------------------------------------------
+// Fonts.
+//------------------------------------------------------------------------------
+
+gulp.task('fonts', () =>
+  gulp
+    // Input.
+    .src(paths.fonts.src)
+    // Output.
+    .pipe(gulp.dest(paths.fonts.dest))
+    // Production: Do nothing.
+    // Development: Stream changes back to 'watch' tasks.
+    .pipe(isProd ? noop() : browserSync.stream()),
+);
+
+//------------------------------------------------------------------------------
 // Styles.
 //------------------------------------------------------------------------------
 
@@ -318,9 +341,10 @@ gulp.task('scripts:watch', ['scripts'], done => {
 // Watches files for changes.
 gulp.task('watch', () => {
   gulp.watch(paths.public.src, ['public']);
-  gulp.watch(paths.views.watch, ['views:watch']);
+  gulp.watch(paths.views.watch, ['views:watch', 'media', 'fonts', 'styles', 'scripts']);
   gulp.watch(paths.media.src, ['media']);
-  gulp.watch(paths.styles.src, ['styles']);
+  gulp.watch(paths.fonts.src, ['fonts']);
+  gulp.watch(paths.styles.watch, ['styles']);
   gulp.watch(paths.scripts.src[0], ['scripts:watch']);
 });
 

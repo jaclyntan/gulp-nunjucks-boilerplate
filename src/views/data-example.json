@@ -1,0 +1,34 @@
+{
+  "site": {
+    "title": "(site title)",
+    "description": "(site meta description)"
+  },
+  "pages": {
+    "index": {
+      "title": "",
+      "description": "",
+      "stylesheets": ["main"],
+      "scripts": ["main"]
+    },
+    "about-index": {
+      "title": "(about title)",
+      "description": "(about meta description)",
+      "stylesheets": ["main", "about"],
+      "scripts": ["main", "about"]
+    }
+  },
+  "menus": {
+    "primary": [
+      {
+        "id": "index",
+        "path": "/",
+        "children": "Home"
+      },
+      {
+        "id": "about-index",
+        "path": "/about",
+        "children": "<i>About</i>"
+      }
+    ]
+  }
+}

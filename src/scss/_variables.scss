@@ -1,0 +1,32 @@
+
+
+:root {
+    --primary:#ec1c31;
+    --secondary: #FFF;
+}
+.modal-active:root {
+    --primary:#FFF;
+    --secondary: #ec1c31;
+}
+//colours
+//common
+$brand-lightgrey: rgb(228, 228, 228);
+$brand-darkgrey: #999;
+
+//brand
+$brand-primary: var(--primary);
+$brand-secondary: var(--secondary);
+$brand-placeholder-color:$brand-lightgrey;
+
+
+
+@font-face {
+	font-family: 'BrandonGrotesqueCond';
+    src:url('/static/fonts/392640_0_0.woff2') format('woff2'), 
+        url('/static/fonts/392640_0_0.woff') format('woff'), 
+}
+
+
+//fonts
+$brand-font: 'BrandonGrotesqueCond',"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$brand-heading: 'BrandonGrotesqueCond',"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

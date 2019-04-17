@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "(site title)",
-    "description": "(site meta description)"
+    "title": "RunAmuk Cider Co.",
+    "description": "We\u2019re not here to follow others. We don\/\u2019t play by their rules. We\u2019re here to disrupt;\r\n    To craft our kind of cider. That means, LOCAL Donnybrook apples - \u0003hand crushed, smashed and brewed down the road in Stratham.  \r\n    The way it should be done. \r\n    But not the way it\u2019s usually done. \r\n    We\u2019re mischief makers.\r\n    \r\n    Let\u2019s runamuk."
   },
   "pages": {
     "index": {
@@ -9,25 +9,38 @@
       "description": "",
       "stylesheets": ["main"],
       "scripts": ["main"]
-    },
-    "about-index": {
-      "title": "(about title)",
-      "description": "(about meta description)",
-      "stylesheets": ["main", "about"],
-      "scripts": ["main", "about"]
     }
   },
   "menus": {
     "primary": [
       {
-        "id": "index",
-        "path": "/",
-        "children": "Home"
+        "id": "about",
+        "path": "/#about",
+        "children": "About"
       },
       {
-        "id": "about-index",
-        "path": "/about",
-        "children": "<i>About</i>"
+        "id": "mail-us",
+        "path": "mailto:info@runamukciderco.com.au",
+        "children": "Contact"
+      }
+    ],
+    "secondary": [
+      {
+        "id": "facebook",
+        "path": "https://www.facebook.com/RunamukCiderCo/",
+        "children": "Facebook",
+        "external": true
+      },
+      {
+        "id": "instagram",
+        "path": "https://www.instagram.com/runamukciderco/",
+        "children": "Instagram",
+        "external": true
+      },
+      {
+        "id": "contact",
+        "path": "mailto:info@runamukciderco.com.au",
+        "children": "Contact"
       }
     ]
   }
