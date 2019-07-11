@@ -20,6 +20,7 @@ const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const webpack = require('webpack-stream');
+const markdown = require('gulp-markdown');
 
 // Local
 const packageJson = require('./package.json');
@@ -47,8 +48,8 @@ const paths = {
   },
   views: {
     root: `${dirs.entry}/views`,
-    watch: `${dirs.entry}/views/**/*.+(html|json|njk|nunjucks)`,
-    src: `${dirs.entry}/views/pages/**/*.+(html|njk|nunjucks)`,
+    watch: `${dirs.entry}/views/**/*.+(html|json|njk|nunjucks|md)`,
+    src: `${dirs.entry}/views/pages/**/*.+(html|njk|nunjucks|md)`,
     dest: `${dirs.output}`,
   },
   media: {
@@ -169,6 +170,7 @@ gulp.task('public', () =>
     .src(paths.public.src)
     // Report errors.
     .pipe(plumber(pluginConfig.plumber))
+    // .pipe(markdown())
     // Production: Do nothing.
     // Development: Pipe only changed files to the next process.
     .pipe(isProd ? noop() : changed(paths.public.dest))
@@ -201,13 +203,18 @@ const getDataForFile = file => {
   const id = getPageId(file);
   // Get global data.
   const jsonData = { ...getJSONFile('data') };
-  // Extract and assign page data.
+  // Extract and assign page data
   jsonData.page = { id, ...jsonData.pages[id] };
   // Remove redundant data.
   delete jsonData.pages;
   // Output global and page specific data.
   return jsonData;
 };
+
+gulp.task('admin-cms', () =>
+  gulp.src('./src/admin/**/*')
+      .pipe(gulp.dest('./public_html/admin'))
+);
 
 gulp.task('views', () =>
   gulp
@@ -341,7 +348,7 @@ gulp.task('scripts:watch', ['scripts'], done => {
 // Watches files for changes.
 gulp.task('watch', () => {
   gulp.watch(paths.public.src, ['public']);
-  gulp.watch(paths.views.watch, ['views:watch', 'media', 'fonts', 'styles', 'scripts']);
+  gulp.watch(paths.views.watch, ['views:watch']);
   gulp.watch(paths.media.src, ['media']);
   gulp.watch(paths.fonts.src, ['fonts']);
   gulp.watch(paths.styles.watch, ['styles']);
@@ -360,7 +367,7 @@ gulp.task('clean', () => del([dirs.output]));
 //------------------------------------------------------------------------------
 
 gulp.task('default', callback => {
-  const compile = ['public', 'views', 'media', 'styles', 'scripts'];
+  const compile = ['public', 'views', 'admin-cms', 'media', 'styles', 'scripts'];
   if (isProd) {
     // Production.
     runSequence('clean', compile, callback);
